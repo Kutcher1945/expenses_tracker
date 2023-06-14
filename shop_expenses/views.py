@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from .models import Category, Expense, Vendor, PaymentMethod, ExpenseReport, Employee, ExpenseCategorySubtype
-from .serializers import CategorySerializer, ExpenseSerializer, VendorSerializer, PaymentMethodSerializer, ExpenseReportSerializer, EmployeeSerializer, ExpenseCategorySubtypeSerializer
+from .models import Category, Expense, Vendor, PaymentMethod, ExpenseReport, Employee, ExpenseCategorySubtype, Profit, ProfitReport
+from .serializers import CategorySerializer, ExpenseSerializer, VendorSerializer, PaymentMethodSerializer, ExpenseReportSerializer, EmployeeSerializer, ExpenseCategorySubtypeSerializer, ProfitSerializer, ProfitReportSerializer
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
@@ -9,6 +9,10 @@ class CategoryViewSet(viewsets.ModelViewSet):
 class ExpenseViewSet(viewsets.ModelViewSet):
     queryset = Expense.objects.all()
     serializer_class = ExpenseSerializer
+
+class ProfitViewSet(viewsets.ModelViewSet):
+    queryset = Profit.objects.all()
+    serializer_class = ProfitSerializer
 
 class VendorViewSet(viewsets.ModelViewSet):
     queryset = Vendor.objects.all()
@@ -21,6 +25,10 @@ class PaymentMethodViewSet(viewsets.ModelViewSet):
 class ExpenseReportViewSet(viewsets.ModelViewSet):
     queryset = ExpenseReport.objects.all()
     serializer_class = ExpenseReportSerializer
+
+class ProfitReportViewSet(viewsets.ModelViewSet):
+    queryset = ProfitReport.objects.all()
+    serializer_class = ProfitReportSerializer
 
 class EmployeeViewSet(viewsets.ModelViewSet):
     queryset = Employee.objects.all()

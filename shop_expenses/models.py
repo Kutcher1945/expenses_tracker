@@ -17,6 +17,17 @@ class Expense(models.Model):
 
     def __str__(self):
         return self.description
+    
+class Profit(models.Model):
+    description = models.CharField(max_length=255)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    date = models.DateField()
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.description
+
 
 class Vendor(models.Model):
     name = models.CharField(max_length=100)
@@ -35,10 +46,27 @@ class ExpenseReport(models.Model):
     name = models.CharField(max_length=100)
     start_date = models.DateField()
     end_date = models.DateField()
-    expenses = models.ManyToManyField(Expense)
+    expenses = models.ManyToManyField('Expense')
 
     def __str__(self):
         return self.name
+
+    @property
+    def total_amount(self):
+        return self.expenses.aggregate(total=models.Sum('amount'))['total'] or 0
+    
+class ProfitReport(models.Model):
+    name = models.CharField(max_length=100)
+    start_date = models.DateField()
+    end_date = models.DateField()
+    profits = models.ManyToManyField('Profit')
+
+    def __str__(self):
+        return self.name
+
+    @property
+    def total_amount(self):
+        return self.profits.aggregate(total=models.Sum('amount'))['total'] or 0
 
 class Employee(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

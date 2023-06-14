@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Expense, Vendor, PaymentMethod, ExpenseReport, Employee, ExpenseCategorySubtype
+from .models import Category, Expense, Vendor, PaymentMethod, ExpenseReport, Employee, ExpenseCategorySubtype, Profit, ProfitReport
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -8,6 +8,12 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Expense)
 class ExpenseAdmin(admin.ModelAdmin):
+    list_display = ('id', 'description', 'amount', 'category', 'date', 'created_by')
+    list_filter = ('category', 'date')
+    search_fields = ('description', 'created_by__username')
+
+@admin.register(Profit)
+class ProfitAdmin(admin.ModelAdmin):
     list_display = ('id', 'description', 'amount', 'category', 'date', 'created_by')
     list_filter = ('category', 'date')
     search_fields = ('description', 'created_by__username')
@@ -24,7 +30,12 @@ class PaymentMethodAdmin(admin.ModelAdmin):
 
 @admin.register(ExpenseReport)
 class ExpenseReportAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'start_date', 'end_date')
+    list_display = ('id', 'name', 'start_date', 'end_date', 'total_amount')
+    search_fields = ('name',)
+
+@admin.register(ProfitReport)
+class ProfitReportAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'start_date', 'end_date', 'total_amount')
     search_fields = ('name',)
 
 @admin.register(Employee)
